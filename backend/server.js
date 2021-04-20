@@ -10,7 +10,7 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const { json } = require('body-parser')
 
-require('dotenv').config()
+
 
 
 // set up connection with the DB

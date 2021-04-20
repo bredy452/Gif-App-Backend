@@ -21,6 +21,7 @@ gifs.post("/", (req, res) => {
       res.status(400).json({error:error.message})
   }
       res.status(201).json(createdGif)
+      console.log(createdGif)
     })
 })
 
