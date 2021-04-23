@@ -15,7 +15,7 @@ gifs.get('/', (req, res) => {
 
 
 //create
-gifs.post("/", (req, res) => {
+gifs.post('/', (req, res) => {
   GifsModel.create(req.body, (error, createdGif) => {
     if (error){
       res.status(400).json({error:error.message})
