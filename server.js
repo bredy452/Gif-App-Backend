@@ -31,7 +31,7 @@ db.on('disconnected', ()=> console.log('mongoose disconnected'));
 app.use(express.json());
 
 // cors middleware
-const whitelist = ['http://localhost:3000', 'https://gif10-backend.herokuapp.com/' ]
+const whitelist = ['http://localhost:3000', 'https://git.heroku.com/gif10-frontend.git' ]
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
