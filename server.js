@@ -31,7 +31,7 @@ db.on('disconnected', ()=> console.log('mongoose disconnected'));
 app.use(express.json());
 
 // cors middleware
-const whitelist = ['http://localhost:3000', 'https://git.heroku.com/gif10-frontend.git' ]
+const whitelist = ['http://localhost:3000', 'https://gif10-frontend.herokuapp.com/' ]
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -52,21 +52,21 @@ app.use(
         saveUninitialized: true
     })
 )
-// const isAuthenticated = (req, res, next) => {
-//     // if (req.session.currentUser) 
-//     if (req.session.currentUser){
-//         console.log("server sees currentUser")
+const isAuthenticated = (req, res, next) => {
+    // if (req.session.currentUser) 
+    if (req.session.currentUser){
+        console.log("server sees currentUser")
         
-//         return next()
-//     } else {
-//         res.redirect('/sessions/new')
-//     }
-// }
+        return next()
+    } else {
+        res.redirect('/sessions/new')
+    }
+}
 
 
 
 app.use('/users', require('./controllers/users'))
-app.use('/gifs', require('./controllers/gifs'))
+app.use('/gifs', require('./controllers/gifs', isAuthenticated))
 app.use('/sessions', require('./controllers/sessions'))
 
 app.listen(PORT, () => {
