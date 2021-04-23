@@ -2,12 +2,13 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const PORT = 3003
-const passport = require('passport')
-const passportLocal = require('passport-local').Strategy
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const { json } = require('body-parser')
+//jwt
+const jwt = require('express-jwt');
+const jsonwebtoken = require('jsonwebtoken');
 
 require('dotenv').config()
 
@@ -34,7 +35,8 @@ const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true)
-        } else {
+        } 
+        else {
             callback(new Error('Not allowed by CORS'))
         }
     },
@@ -43,6 +45,8 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 app.use(cookieParser(process.env.SECRET));
+//jwt
+// app.use(jwt({ secret: process.env.SECRET, algorithms: ['HS256'] }));
 app.use(
     session({
         secret: process.env.SECRET,
@@ -50,6 +54,11 @@ app.use(
         saveUninitialized: true
     })
 )
+
+
+
+
+
 const isAuthenticated = (req, res, next) => {
     // if (req.session.currentUser) 
     if (req.session.currentUser){
