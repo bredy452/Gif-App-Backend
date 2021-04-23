@@ -3,7 +3,7 @@ const app = express()
 const env = require('dotenv').config()
 const cors = require('cors')
 const PORT = process.env.PORT
-const mongodbURI = process.env.MONGODBURI
+const mongodbURI = process.env.MONGODB_URI
 const passport = require('passport')
 const passportLocal = require('passport-local').Strategy
 const cookieParser = require('cookie-parser')
@@ -31,7 +31,7 @@ db.on('disconnected', ()=> console.log('mongoose disconnected'));
 app.use(express.json());
 
 // cors middleware
-const whitelist = ['http://localhost:3000']
+const whitelist = ['http://localhost:3000', 'https://gif10-backend.herokuapp.com/' ]
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
