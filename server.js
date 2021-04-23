@@ -1,20 +1,21 @@
 const express = require('express')
 const app = express()
+const env = require('dotenv').config()
 const cors = require('cors')
-const PORT = 3003
+const PORT = process.env.PORT
+const mongodbURI = process.env.MONGODB_URI
+const passport = require('passport')
+const passportLocal = require('passport-local').Strategy
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const { json } = require('body-parser')
-//jwt
-const jwt = require('express-jwt');
-const jsonwebtoken = require('jsonwebtoken');
 
-require('dotenv').config()
+
 
 
 // set up connection with the DB
-mongoose.connect('mongodb://localhost:27017/gifpracticeDB',{
+mongoose.connect(mongodbURI,{
 	useNewUrlParser:true,
 	useUnifiedTopology: true,
     useFindAndModify: false
@@ -30,13 +31,12 @@ db.on('disconnected', ()=> console.log('mongoose disconnected'));
 app.use(express.json());
 
 // cors middleware
-const whitelist = ['http://localhost:3000']
+const whitelist = ['http://localhost:3000', 'https://gif10-backend.herokuapp.com/' ]
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
             callback(null, true)
-        } 
-        else {
+        } else {
             callback(new Error('Not allowed by CORS'))
         }
     },
@@ -45,8 +45,6 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 app.use(cookieParser(process.env.SECRET));
-//jwt
-// app.use(jwt({ secret: process.env.SECRET, algorithms: ['HS256'] }));
 app.use(
     session({
         secret: process.env.SECRET,
@@ -54,11 +52,6 @@ app.use(
         saveUninitialized: true
     })
 )
-
-
-
-
-
 const isAuthenticated = (req, res, next) => {
     // if (req.session.currentUser) 
     if (req.session.currentUser){
@@ -75,12 +68,6 @@ const isAuthenticated = (req, res, next) => {
 app.use('/users', require('./controllers/users'))
 app.use('/gifs', require('./controllers/gifs', isAuthenticated))
 app.use('/sessions', require('./controllers/sessions'))
-
-
-
-
-
-
 
 app.listen(PORT, () => {
     console.log('gif is listeing on port', PORT)
