@@ -34,7 +34,7 @@ app.use(express.json());
 const whitelist = ['http://localhost:3000', 'https://gif10-frontend.herokuapp.com/' ]
 const corsOptions = {
     origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
+        if (whitelist.indexOf(origin) >= 0) {
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS'))
@@ -66,7 +66,7 @@ const isAuthenticated = (req, res, next) => {
 
 
 app.use('/users', require('./controllers/users'))
-app.use('/gifs', require('./controllers/gifs', isAuthenticated))
+app.use('/gifs', require('./controllers/gifs'))
 app.use('/sessions', require('./controllers/sessions'))
 
 app.listen(PORT, () => {
