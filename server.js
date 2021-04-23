@@ -66,7 +66,7 @@ app.use(
 
 
 app.use('/users', require('./controllers/users'))
-app.use('/gifs', require('./controllers/gifs', isAuthenticated))
+app.use('/gifs', require('./controllers/gifs'))
 app.use('/sessions', require('./controllers/sessions'))
 
 app.listen(PORT, () => {
