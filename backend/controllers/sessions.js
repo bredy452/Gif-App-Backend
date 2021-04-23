@@ -31,7 +31,21 @@ router.post('/', (req, res) => {
                     // let user = JSON.parse(JSON.stringify(
                     //     req.session.currentUser
                     // ))
-                    res.status(201).json(foundUser)
+
+
+                    // res.status(201).json(foundUser)
+
+
+                    res.json({
+                        cookie: setCookie = (foundUser, next) => {
+                                res.cookie('user', user, { signed: true, httpOnly: true });
+                            }, 
+                        user: foundUser
+                      });
+                      req.session.cookie = req.signedCookies
+                      console.log(req.signedCookies)
+                      console.log(foundUser)
+                      console.log(req.session, 'cookietest')
                     // res.status(200).req.session.cookie('id', foundUser.id, { signed: true, httpOnly: true });
                     // setCookie = (foundUser, next) => {
                     //     res.cookie('user', user, { signed: true, httpOnly: true });
@@ -62,12 +76,13 @@ router.delete('/signout', (req, res) => {
         }
         else
         if (foundUser) {
+            console.log("this req.body", req.body)
+        console.log(req.session)
         foundUser.loggedIn = false
         res.status(201).json(foundUser)    
-        console.log(foundUser)
         req.session.destroy(() => {
-       
     })
+    console.log(req.session)
     }
     
 })

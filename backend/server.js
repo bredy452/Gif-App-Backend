@@ -3,6 +3,7 @@ const app = express()
 const env = require('dotenv').config()
 const cors = require('cors')
 const PORT = process.env.PORT
+const mongodbURI = process.env.MONGODBURI
 const passport = require('passport')
 const passportLocal = require('passport-local').Strategy
 const cookieParser = require('cookie-parser')
@@ -14,7 +15,7 @@ const { json } = require('body-parser')
 
 
 // set up connection with the DB
-mongoose.connect('mongodb://localhost:27017/gifpracticeDB',{
+mongoose.connect(mongodbURI,{
 	useNewUrlParser:true,
 	useUnifiedTopology: true,
     useFindAndModify: false
