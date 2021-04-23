@@ -52,16 +52,16 @@ app.use(
         saveUninitialized: true
     })
 )
-const isAuthenticated = (req, res, next) => {
-    // if (req.session.currentUser) 
-    if (req.session.currentUser){
-        console.log("server sees currentUser")
+// const isAuthenticated = (req, res, next) => {
+//     // if (req.session.currentUser) 
+//     if (req.session.currentUser){
+//         console.log("server sees currentUser")
         
-        return next()
-    } else {
-        res.redirect('/sessions/new')
-    }
-}
+//         return next()
+//     } else {
+//         res.redirect('/sessions/new')
+//     }
+// }
 
 
 
