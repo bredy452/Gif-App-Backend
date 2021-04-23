@@ -69,12 +69,6 @@ app.use('/users', require('./controllers/users'))
 app.use('/gifs', require('./controllers/gifs', isAuthenticated))
 app.use('/sessions', require('./controllers/sessions'))
 
-
-
-
-
-
-
 app.listen(PORT, () => {
     console.log('gif is listeing on port', PORT)
 })
